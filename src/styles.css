@@ -1,0 +1,19 @@
+.board-row::after {
+    clear: both;
+    content: '';
+    display: block;
+}
+.square {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    height: 34px;
+    width: 34px;
+    line-height: 34px;
+    text-align: center;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+.status {
+    margin-bottom: 10px;
+}
