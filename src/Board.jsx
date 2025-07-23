@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Square from './Square.jsx';
 
 function getnextPlayer(squares) {
@@ -8,39 +7,8 @@ function getnextPlayer(squares) {
     return nextPlayer;
 }
 
-function calculateWinner(squares) {
-    const winConditions = [
-        // 每行相同
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        // 每列相同
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        // 对角线相同
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
-    for (let i = 0; i < winConditions.length; i++) {
-        const winCondition = winConditions[i];
-        const [a, b, c] = winCondition;
-        if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
-        }
-    }
-    const filledSquares = squares.filter(item => (item === "X" || item === "O"));
-    if(filledSquares.length === 9) {
-        return "Nobody";
-    }
-    return null;
-}
-
-function Board() {
-    const [squares, setSquares] = useState(Array(9).fill(null));
+function Board({squares, winner, onChange}) {
     const nextPlayer = getnextPlayer(squares);
-
-    const winner = calculateWinner(squares);
     
     // 点击棋盘格的时候触发clickHandler，clickHandler会创建currentSquare去改变square的state，一旦被setSquares方法改变state，就会重新渲染
     // 重新渲染，重新执行Board(), 执行newLetter，也会刷新status的值
@@ -51,7 +19,7 @@ function Board() {
         if (currentSquare === null && !winner) {
             const newSquares = squares.slice();  // 创建一个squares的副本，生成一个全新的数组，确保原square不变
             newSquares[index] = nextPlayer;
-            setSquares(newSquares);
+            onChange(newSquares);
         }
 
         /* 
