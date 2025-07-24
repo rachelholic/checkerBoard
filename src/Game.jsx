@@ -39,7 +39,6 @@ function Game() {
     const result = calculateWinner(squares);
     result && setWinner(result);
   }
-  
 
   const handleSquareChange = (newSquares) => {
     setSquares(newSquares);
@@ -51,9 +50,16 @@ function Game() {
     setSquares(newSquares);
   }
 
+  const handleReset = () => {
+    setSquares(Array(9).fill(null));
+    setHistory([Array(9).fill(null)]);
+    setWinner(undefined);
+  }
+
   return (
     <div className='game'>
       <div className='game-board'>
+        <button onClick={()=> handleReset()} >Reset</button>
         <Board squares={squares} winner={winner} onChange={handleSquareChange}/>
       </div>
       <div className='game-history'>
